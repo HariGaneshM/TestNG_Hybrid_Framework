@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings
+.vscode
+reports/
+logs/
+screenshots/
+target/
+test-output/
