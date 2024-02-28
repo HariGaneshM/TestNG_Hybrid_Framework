@@ -13,14 +13,24 @@ import utilities.Configs;
 
 public class BaseTest {
 	
-	public static WebDriver driver;
 	public static String env;
 	
+	private static ThreadLocal<WebDriver> threadSafeDriver = new ThreadLocal<WebDriver>();
+	
+	public static WebDriver getDriver() {
+		
+		return threadSafeDriver.get();
+	}
+	
 	@BeforeMethod
-	public void initializeDriver() {
+	public void setDriver() {
+		
+		Configs.readConfigs();
 		
 		String browser = System.getProperty("browser", Configs.getProperty("browser"));
 		env = System.getProperty("env", Configs.getProperty("env"));
+		
+		WebDriver driver = null;
 		
 		if (browser.equalsIgnoreCase("edge")) {
 			
@@ -34,23 +44,25 @@ public class BaseTest {
 			
 			System.out.println("Invalid browser value: "+browser);
 		}
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+		threadSafeDriver.set(driver);
+		getDriver().manage().window().maximize();
+		getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 	}
 	
 	public void goToPage(String url) {
 		
-		driver.get(url);
+		getDriver().get(url);
 	}
 	
 	public void navigateToPage(String url) {
 		
-		driver.navigate().to(url);
+		getDriver().navigate().to(url);
 	}
 	
 	@AfterMethod
 	public void closeDriver(ITestResult result) {
 		
-		driver.quit();
+		getDriver().quit();
+		threadSafeDriver.remove();
     }
 }

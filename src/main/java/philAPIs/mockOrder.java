@@ -2,6 +2,8 @@ package philAPIs;
 
 import static io.restassured.RestAssured.given;
 
+import java.util.HashMap;
+
 import base.BaseTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -16,12 +18,7 @@ import utilities.Configs;
 
 public class mockOrder extends BaseTest {
 	
-	public static Response response;
-	public static String rxNumber;
-	public static String patientName;
-	public static String patientEmail;
-	
-	public static void createOrder(String program, String stage, String paymentType, String docterNPI) {
+	public static HashMap<String, String> createOrder(String program, String stage, String paymentType, String docterNPI) {
 			
 		MockAPI payload = new MockAPI();
 		BaseData baseData = new BaseData();
@@ -43,29 +40,37 @@ public class mockOrder extends BaseTest {
 		
 		RestAssured.baseURI = Configs.getProperty("mockOrder.baseURI").replace("env", env);
 		
-		response = given()
-		   .contentType(ContentType.JSON)
-		   .headers("Authorization", Configs.getProperty("philKey"))
-		   .body(payload)
-		   .when()
-		   .post(Configs.getProperty("mockOrder.endPoint"));
+		Response response = given()
+							   .contentType(ContentType.JSON)
+							   .headers("Authorization", Configs.getProperty("philKey"))
+							   .body(payload)
+							   .when()
+							   .post(Configs.getProperty("mockOrder.endPoint"));
 		
-		rxNumber = response
-				       .then()
-				       .contentType(ContentType.JSON)
-				       .extract()
-				       .path("data.prescriptions[0].number");
+		String rxNumber = response
+						       .then()
+						       .contentType(ContentType.JSON)
+						       .extract()
+						       .path("data.prescriptions[0].number");
 		
-		patientName = response
-				       .then()
-				       .contentType(ContentType.JSON)
-				       .extract()
-				       .path("data.prescriptions[0].manager.fullName");
+		String patientName = response
+							       .then()
+							       .contentType(ContentType.JSON)
+							       .extract()
+							       .path("data.prescriptions[0].manager.fullName");
 		
-		patientEmail = response
-				       .then()
-				       .contentType(ContentType.JSON)
-				       .extract()
-				       .path("data.prescriptions[0].manager.email");
+		String patientEmail = response
+							       .then()
+							       .contentType(ContentType.JSON)
+							       .extract()
+							       .path("data.prescriptions[0].manager.email");
+		
+		HashMap<String, String> responseInfo = new HashMap<String, String>();
+		
+		responseInfo.put("rxNumber", rxNumber);
+		responseInfo.put("patientName", patientName);
+		responseInfo.put("patientEmail", patientEmail);
+		
+		return responseInfo;
 	}
 }

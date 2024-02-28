@@ -33,7 +33,7 @@ public class Utils implements IRetryAnalyzer {
 	
 	public static String getScreenshot(String name) throws IOException {
 		
-		TakesScreenshot screenshotDriver = (TakesScreenshot) BaseTest.driver;
+		TakesScreenshot screenshotDriver = (TakesScreenshot) BaseTest.getDriver();
 	    File srcFile=screenshotDriver.getScreenshotAs(OutputType.FILE);
 	    String destFilePath = System.getProperty("user.dir")+File.separator+"screenshots"+File.separator+name+".png";
 		File destFile = new File(destFilePath);

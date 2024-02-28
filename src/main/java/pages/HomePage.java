@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import philAPIs.mockOrder;
 import utilities.Actions;
 
 public class HomePage extends Actions{
@@ -97,9 +96,9 @@ public class HomePage extends Actions{
 		clickOnElement(orderDetailsButton);
 	}
 	
-	public void getOrderDetailsWithoutWaiting() {
+	public void getOrderDetailsWithoutWaiting(String rxNumber) {
 		
-		searchField.sendKeys(mockOrder.rxNumber);
+		searchField.sendKeys(rxNumber);
 		searchButton.click();
 		waitForElementToBeInVisible(loadingIcon);
 		waitForElementToBeVisible(searchResultsContainer);

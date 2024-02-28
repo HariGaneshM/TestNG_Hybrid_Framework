@@ -39,11 +39,11 @@ public class RunInsurancePage extends Actions{
 	@FindBy(name = "insuranceExceptionForm")
 	WebElement cannotFillModal;
 	
-	public void cannotFillToPA() throws Exception {
+	public void cannotFillToPA(String rxNumber) throws Exception {
 		
 		HomePage hm = new HomePage(driver);
 //		hm.getOrderDetails();
-		hm.getOrderDetailsWithoutWaiting();
+		hm.getOrderDetailsWithoutWaiting(rxNumber);
 		clickOnElement(cannotFillButton);
 //		clickOnElement(cannotFillDropdownButtons.get(0));
 		Thread.sleep(2000);

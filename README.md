@@ -10,5 +10,6 @@ Hybrid Automation Framework using Java Selenium with TestNG based on Page Object
 5. TestNG Listners
 7. Extend Reports
 8. Data driven from props
-9. Run Configurations:
-    TestNG and Maven along with GitHub Actions
+9. Parallel Runs with Thread safe driver
+10. Run with TestNG and Maven commands
+11. GitHub Actions Configuration with Dynamic inputs
