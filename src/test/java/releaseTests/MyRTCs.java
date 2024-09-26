@@ -9,6 +9,7 @@ import base.BaseTest;
 import pages.AddRxPage;
 import pages.HomePage;
 import pages.LoginPage;
+import pages.PasswordResetPage;
 import pages.myPhil.AccountPage;
 import pages.myPhil.MyPhilLoginPage;
 import pages.stages.CreatePAPage;
@@ -90,5 +91,18 @@ public class MyRTCs extends BaseTest {
 		pa.startPA();
 		pa.askForCN();
 		Assert.assertEquals(opsDash.getStageLabel(), Configs.getProperty("exp.label2"));
+	}
+	
+	@Test
+	public void FogotPasswordflow() {
+		
+		LoginPage ops = new LoginPage(getDriver());
+		PasswordResetPage p = new PasswordResetPage(getDriver());
+				
+		goToPage(Configs.getProperty("ops.url").replace("env", env));
+		ops.goToForgotPasswordPage();
+		p.sendVerificationEmail(Configs.getProperty("ops.email"));
+		
+		Assert.assertEquals(p.getErrorMessage(), Configs.getProperty("exp.forgotpasswordError"));
 	}
 }

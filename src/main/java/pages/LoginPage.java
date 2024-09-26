@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,10 +25,17 @@ public class LoginPage extends Actions {
 	@FindBy(id = "submitBtn")
 	WebElement loginButton;
 	
+	By forgotPasswordLink = By.cssSelector("div.forgot-password a");
+	
 	public void logIn(String email, String password) {
 			
 		enterData(emailField, email);
 		enterData(passwordField, password);
 		clickOnElement(loginButton);
+	}
+	
+	public void goToForgotPasswordPage() {
+		
+		driver.findElement(forgotPasswordLink).click();
 	}
 }
