@@ -67,14 +67,14 @@ jobs:
          -Denv=${{inputs.environment || 'stage'}} 
     
     - name: Upload Screenshots
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Screenshots
         path: screenshots
       if: always()
 
     - name: Upload Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Report
         path: reports
